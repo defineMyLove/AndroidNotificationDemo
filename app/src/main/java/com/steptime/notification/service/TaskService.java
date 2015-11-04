@@ -41,18 +41,28 @@ public class TaskService extends IntentService {
         final int id = 100;
         NotificationUtil.createTextNotification(id, getBaseContext(), "发布任务", "正在发布任务...", null);
         //模拟网路发送数据到服务器5秒
-        handler.postDelayed(new Runnable() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 NotificationUtil.createTextNotification(id, getBaseContext(), "发布任务", "发布任务成功", null);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        NotificationUtil.cancel(id);
-                        stopSelf();
-                    }
-                }, 3000);
             }
-        }, 3000);
+        }).start();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NotificationUtil.cancel(id);
+            }
+        }).start();
     }
 }
