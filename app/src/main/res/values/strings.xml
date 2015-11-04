@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Notification</string>
+    <string name="down_state">%s</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.steptime.notification">
+
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 灯光权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!--网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <application
+        android:name=".AppApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.NotificationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.AboutActivity">
+        </activity>
+        <activity android:name=".ui.MainActivity" />
+        <!---
+        SpecialNotificationActivity参数说明:
+
+        android:taskAffinity=""
+        与您在代码中设置的 FLAG_ACTIVITY_NEW_TASK 标志相结合，这可确保此 Activity 不会进入应用的默认任务。任何具有应用默认关联的现有任务均不受影响。
+
+        android:excludeFromRecents="true"
+        将新任务从“最新动态”中排除，这样用户就不会在无意中导航回它。
+         -->
+        <activity
+            android:name=".SpecialNotificationActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""></activity>
+        <service
+            android:name=".service.NotificationService"/>
+        <service
+            android:name=".service.DownloadService"/>
+        <service android:name="com.steptime.notification.service.TaskService" >
+            <intent-filter>
+                <action android:name="com.steptime.ACTION_PUB_TASK" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
